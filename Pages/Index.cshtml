@@ -1,0 +1,171 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+        <form method="GET"
+              asp-page="Index"
+              class="w-50"
+              hx-get
+              hx-page="Index"
+              hx-target="#description"
+              hx-swap="outerHTML">
+            <div>
+                <label asp-for="Cron"></label>
+                <div class="input-group input-group-lg mb-3">
+                    <input
+                        id="cronExpression"
+                        hx-get
+                        hx-page="Index"
+                        hx-trigger="keyup changed delay:500ms"
+                        autocomplete="off"
+                        placeholder="* * * * *"
+                        asp-for="Cron" class="form-control text-center" type="text">
+                    <button type="button" class="btn btn-primary" onclick="copyToClipboard()">
+                        <i class="fas fa-clipboard"></i>
+                        <span class="visually-hidden">Copy to Clipboard</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @await Html.PartialAsync("_Result")
+</div>
+
+<hr class="m-4"/>
+
+<div class="row">
+    <div class="col-md">
+        <div>
+            <h2 class="display-6">
+                <i class="fa fa-question-circle text-primary"></i>
+                Helpful Information
+            </h2>
+        </div>
+        <markdown>
+            Cron comes in several `flavors`, so try them all out! Be sure that your target use supports
+            the format you need. Most systems will work with the `5 places pattern` but that may not
+            be enough precision in some cases.
+        </markdown>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                    5 places
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                    6 places
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">
+                    7 places
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content p-4" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <table class="table text-center table-bordered">
+                    <thead class="bg-primary bg-opacity-25">
+                    <tr>
+                        <th aria-label="minute">*</th>
+                        <th aria-label="hour">*</th>
+                        <th aria-label="day of month">*</th>
+                        <th aria-label="month">*</th>
+                        <th aria-label="day of the week">*</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>minute <br/>(0 - 59)</td>
+                        <td>hour <br/>(0 - 23)</td>
+                        <td>hour <br/>(1 - 31)</td>
+                        <td>month <br/>(1 - 12)</td>
+                        <td>day of the week <br/>(0 - 6)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <table class="table text-center table-bordered">
+                    <thead class="bg-primary bg-opacity-25">
+                    <tr>
+                        <th aria-label="seconds">(*)</th>
+                        <th aria-label="minute">*</th>
+                        <th aria-label="hour">*</th>
+                        <th aria-label="day of month">*</th>
+                        <th aria-label="month">*</th>
+                        <th aria-label="day of the week">*</th>
+                        <th aria-label="year">(*)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>seconds <br/>(0 - 59)</td>
+                        <td>minute <br/>(0 - 59)</td>
+                        <td>hour <br/>(0 - 23)</td>
+                        <td>hour <br/>(1 - 31)</td>
+                        <td>month <br/>(1 - 12)</td>
+                        <td>day of the week <br/>(0 - 6)</td>
+                        <td>year <br/>(YYYY)</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <markdown>
+                    `(*)` You either must have seconds at the start of the 6 places pattern
+                    or a year at the end of the pattern. You could also use the **7 places** pattern.
+                </markdown>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <table class="table text-center table-bordered">
+                    <thead class="bg-primary bg-opacity-25">
+                    <tr>
+                        <th aria-label="seconds">*</th>
+                        <th aria-label="minute">*</th>
+                        <th aria-label="hour">*</th>
+                        <th aria-label="day of month">*</th>
+                        <th aria-label="month">*</th>
+                        <th aria-label="day of the week">*</th>
+                        <th aria-label="year">*</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>seconds <br/>(0 - 59)</td>
+                        <td>minute <br/>(0 - 59)</td>
+                        <td>hour <br/>(0 - 23)</td>
+                        <td>hour <br/>(1 - 31)</td>
+                        <td>month <br/>(1 - 12)</td>
+                        <td>day of the week <br/>(0 - 6)</td>
+                        <td>year <br/>(YYYY)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="m-4"/>
+
+<div class="row">
+    <div class="col-md">
+        <h3 class="display-6">
+            <i class="fa fa-info-circle text-primary"></i>
+            Credit
+        </h3>
+        <markdown>
+            - Cron Expression Descriptor is a C# / .NET Library authored by
+            <a href="https://www.geekytidbits.com/">Brady Holt</a> and
+            translated into other languages by contributors on
+            <a href="https://github.com/bradymholt/cron-expression-descriptor">GitHub</a>.
+            - [HTMX](https://htmx.org) for client-side javascript
+            - [Khalid Abuhakmeh](https://khalidabuhakmeh.com) wrote this version
+        </markdown>
+    </div>
+</div>

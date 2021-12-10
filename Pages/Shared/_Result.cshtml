@@ -1,0 +1,20 @@
+@model IndexModel
+
+@if (Model?.Description is {})
+{
+    <div id="description" class="d-flex justify-content-center">
+        <div class="alert alert-success w-75 text-lg-start" role="alert">
+            <i class="fa fa-check-circle pe-2"></i>
+            @Model.Description
+        </div>
+    </div>
+}
+else
+{
+    <div id="description" class="d-flex justify-content-center">
+        <div class="alert alert-warning w-75 text-lg-start" role="alert">
+            <i class="fa fa-hand-point-up pe-2"></i>
+            Enter a valid Cron expression above
+        </div>
+    </div>
+}
