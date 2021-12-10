@@ -6,9 +6,11 @@ This site uses the following technologies:
 
 - CronExpressionDescriptor
 - HTMX and HTMX.NET
-- Westwin.AspNetCore.Markdown
+- Westwind.AspNetCore.Markdown
 
 It's a fun little demo.
+
+![screenshot of running demo](screenshot.png)
 
 ## License
 
